@@ -2,7 +2,10 @@
 
 var filesys = require( 'fs' );
 var outfile = "startup.txt";
-var out = "I disagree! Startup!=growth. Startup is a company that's trying to become a big-business. Old companies can grow rapidly too. See Apple for example. But Apple is not a startup) However: GOOD startups grow fast. So that is what phrase 'startup==growth' means";
+
+//var out = "I disagree! Startup!=growth. Startup is a company that's trying to become a big-business. Old companies can grow rapidly too. See Apple for example. But Apple is not a startup) However: GOOD startups grow fast. So that is what phrase 'startup==growth' means";
+
+var out = "A startup is a business built to grow rapidly.\n";
 
 filesys.writeFileSync( outfile, out );  
 
