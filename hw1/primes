@@ -1,0 +1,54 @@
+#!/usr/bin/node
+
+var fs = require( 'fs' );
+var outfile = "primes.txt";
+
+// very slow algorithm :-)
+function IsPrime( n )
+{ 
+	if( n<2 ) 
+	{
+		// not a prime!
+		return false;
+	}
+
+	for( var i=2; i<n; ++i ) 
+	{
+		if( (n%i)===0 ) 
+		{
+			// not a prime 
+			return false;
+		}
+	}
+
+	return true;
+}
+
+var arr = new Array()
+
+// find primes
+for( var i=0; i<200; ++i )
+{
+	if( IsPrime( i ) )
+	{
+		arr.push( i );
+	}
+}
+
+// remove old file (if exists)
+if( fs.existsSync( outfile ) )
+{
+	fs.unlinkSync( outfile );
+}
+
+// print to file
+for( var i=0; i<arr.length; ++i )
+{
+	fs.appendFile( outfile, arr[i] );  
+
+	if( i!=arr.length-1 )
+	{
+		fs.appendFile( outfile, ", " );  
+	}
+}
+
