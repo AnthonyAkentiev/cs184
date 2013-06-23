@@ -27,12 +27,15 @@ function IsPrime( n )
 var arr = new Array()
 
 // find primes
-for( var i=1; i<=100; ++i )
+var i = 2;
+while( arr.length!=100 )
 {
 	if( IsPrime( i ) )
 	{
 		arr.push( i );
 	}
+
+	++i;
 }
 
 // remove old file (if exists)
