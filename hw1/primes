@@ -27,7 +27,7 @@ function IsPrime( n )
 var arr = new Array()
 
 // find primes
-for( var i=0; i<200; ++i )
+for( var i=1; i<=200; ++i )
 {
 	if( IsPrime( i ) )
 	{
@@ -44,11 +44,11 @@ if( fs.existsSync( outfile ) )
 // print to file
 for( var i=0; i<arr.length; ++i )
 {
-	fs.appendFile( outfile, arr[i] );  
+	fs.appendFileSync( outfile, arr[i] );  
 
 	if( i!=arr.length-1 )
 	{
-		fs.appendFile( outfile, ", " );  
+		fs.appendFileSync( outfile, "," );  
 	}
 }
 
