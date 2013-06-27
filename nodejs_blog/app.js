@@ -1,7 +1,9 @@
 var express = require('express');
-var articleProvide = require('./article-provider-mem.js').ArticleProvide;
+var articleProvider = require('./article-provider-mem.js').ArticleProvider;
 
-var app = module.exports = express.createServer();
+var app = express();
+var filesys = require('fs');
+var logFile = 'requests.log';
 
 app.configure(
      function()
@@ -32,17 +34,25 @@ app.configure('production',
      }     
 );
 
-var articleProvide = new ArticleProvide();
+var articleProvider = new ArticleProvider();
 
 // On HTTP GET
 app.get('/', 
      function(req,res)
      {
-          articleProvide.findAll(
+          articleProvider.findAll(
                // callback 
                function(error,docs)
                {
-                    res.send(docs);
+		    //var data = 'Request for document ' + req.params.document + ' for URL: ' + req.url + '\n';
+		    //filesys.appendFile( logFile, data );
+       		    //console.log( 'Retrieving docs: ' + docs.length );
+                    
+		    //res.send(docs);
+		
+		    res.render( 'index.jade', 
+ 		     	{ locals: {title:'Blog', articles: docs } }
+	            );
                }
           );
      }
