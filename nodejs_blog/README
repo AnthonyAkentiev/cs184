@@ -1,0 +1,3 @@
+See: http://howtonode.org/express-mongodb
+*****************************************
+We will use Node.js + Jade (Templates to generate HTML from JS objects) + Stylus (CSS generator)

@@ -1,5 +1,6 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
 h1= pageTitle
-articles
+#articles
    - each article in articles
       div.article
         div.created_at= article.created_at
