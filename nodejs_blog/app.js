@@ -51,7 +51,7 @@ app.get('/',
 		    //res.send(docs);
 		
 		    res.render( 'index.jade', 
- 		     	{ locals: {title:'Blog', articles: docs } }
+ 		     	{ pageTitle:'Blog', articles: docs }
 	            );
                }
           );
