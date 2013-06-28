@@ -6,8 +6,9 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
-    "jade": "*",
-    "stylus": "*"
+    "express": "3.2.6"
+    , "stylus": ">= 0.0.1"
+    , "jade": ">= 0.0.1"
+    , "mongodb": ">= 0.9.6-7"
   }
 }
