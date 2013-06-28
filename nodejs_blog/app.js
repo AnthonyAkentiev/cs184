@@ -37,7 +37,14 @@ app.configure('production',
 var articleProvider = new ArticleProvider();
 
 // On HTTP GET
-app.get('/', 
+app.get('/',
+     function(req,res)
+     {
+          res.redirect('/blog');
+     }
+);
+
+app.get('/blog', 
      function(req,res)
      {
           articleProvider.findAll(
@@ -55,6 +62,27 @@ app.get('/',
 	            );
                }
           );
+     }
+);
+
+app.get('/blog/new',
+     function(req,res)
+     {
+          res.render( 'blog_new.jade', { pageTitle:'New post' } );
+     }	
+);
+
+app.post('/blog/new',
+     function(req,res)
+     {
+          articleProvider.save( 
+		{title:req.param('title') , body:req.param('body') }, 
+		function(err,doc)
+		{
+		     // TODO: error page
+		     res.redirect('/');
+		}  
+          ); 
      }
 );
 
