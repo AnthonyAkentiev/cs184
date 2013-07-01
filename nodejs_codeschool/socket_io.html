@@ -1,0 +1,14 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var server = io.connect('http://localhost:8000');
+
+$('#chat_form').submit(function(e){
+	var message = $('#chat_input').val();
+	
+	server.emit('messages',message);
+});
+
+server.on('messages',function(data){
+	alert(data.message);
+});
+</script>
