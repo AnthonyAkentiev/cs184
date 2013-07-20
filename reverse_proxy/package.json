@@ -1,0 +1,8 @@
+{
+     "name": "RevProxy",
+     "version": "0.0.2",
+     "description": "A simple reverse proxy",
+     "author": "Anton Akentiev"
+     "engine": "node 0.6.18",
+     "main": "lib/Modxy"
+}
