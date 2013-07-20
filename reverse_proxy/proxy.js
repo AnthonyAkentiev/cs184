@@ -4,13 +4,13 @@ var events = require('events');
 var url = require('url');
 
 /*
-SSL options:
+   SSL options:
 
-var options = {
-     key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
-     cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+   var options = {
+key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
 };
-*/
+ */
 var createServer = function(opts,callback) {
      if (opts.ssl) {
           return https.createServer(opts,callback);
@@ -34,14 +34,14 @@ function Proxy(opts,callback) {
      if (opts==null) {
           opts = {port:80, ssl:false, ssl_client:false};
      }
-     
+
      if (callback==null) {
           callback = function(){};
      }
 
      self.server = createServer(opts,function(req,res) {
           req.setEncoding('binary');
-          
+
           var context = { request: req, response: response };
 
           // configure the client (proxy) request
@@ -57,38 +57,38 @@ function Proxy(opts,callback) {
           callback(req,res);
 
           // emit client (proxy) request params
-          // 3rd parameter is a 'default callback'....
-          self.emit('client-request-params', context, function(context) {
+          // 3rd parameter is a 'default callback'...
+          self.emit('client-request-params', context, function(context) {
                // make the request and attach it to the context
                context.client_request = doRequest(opts, context.client_request_params, function(client_response) {
-                    // set binary encoding by default
+                    // set binary encoding by default
                     client_response.setEncoding('binary');
-                
+
                     // attach client (proxy) response to context
                     context.client_response = client_response;
-                
+
                     // listen client (proxy) response data event
-                    client_response.on('data', function(chunk) {
-                         // emit client (proxy) response data event
-                         self.emit('client-response-data', context, chunk, function(context, chunk){
+                    client_response.on('data', function(chunk) {
+                         // emit client (proxy) response data event
+                         self.emit('client-response-data', context, chunk, function(context, chunk){
                               // default callback
-                              context.response.write(chunk, 'binary');
-                        });
+                              context.response.write(chunk, 'binary');
+                         });
                     });
-                
-                     // listen client (proxy) response end event
+
+                    // listen client (proxy) response end event
                     client_response.on('end', function(){
                          // emit client (proxy) response end event
                          self.emit('client-response-end', context, function(context, end){
                               // default callback
                               context.response.end(end);
-                         });                
-                    }); 
+                         });
+                    });
                });
-           
+
                // ignore client (proxy) request timeouts
                context.client_request.on('error', function(){});
-           
+
                // listen server request data event
                req.on('data', function(chunk){
                     // emit server request data event
@@ -97,7 +97,7 @@ function Proxy(opts,callback) {
                          context.client_request.write(chunk, 'binary');
                     });
                });
-           
+
                // listen server request end event
                req.on('end', function(){
                     // emit server request end event
@@ -112,14 +112,14 @@ function Proxy(opts,callback) {
 
      // calls last argument on first
      function call1(first, callback){
-         return callback(first);
+          return callback(first);
      }
-     
+
      // calls last argument on first and second
      function call2(first, second, callback){
           return callback(first, second);
      }
-          
+
      // wire default callback for client (proxy) request params
      self.on('client-request-params', call1);
 
@@ -139,21 +139,46 @@ function Proxy(opts,callback) {
      self.listen = function(){
           self.server.listen.apply(self.server, arguments);
      };
+
+     // replaces any attached listener for the provided one
+     self.at = function(event, callback) {
+          self.removeAllListeners(event);
+          self.on(event, callback);
+     };
+
+     // pipes the corrent listeners at the end of the provided one
+     self.pre = function(event, callback){
+          var attached = self.listeners(event),
+              listeners = [];
+
+          attached.forEach(function(listener){
+               listeners.push(listener);
+               self.removeListener(event, listener);
+          });
+
+          self.on(event, function(){
+               var _arguments = arguments;
+               callback.apply(self, _arguments);
+               listeners.forEach(function(listener){
+                    listener.apply(self, _arguments);
+               });
+          });
+     };
 }
 
 // extends events.EventEmitter
 Proxy.prototype = Object.create(events.EventEmitter.prototype);
- 
+
 // is globally exported
 module.exports = Proxy;
 
 /*
-var opts = {port:80, ssl:false, ssl_client:false};
+   var opts = {port:80, ssl:false, ssl_client:false};
 
-var p = Proxy(opts,function(req,res) {
+   var p = Proxy(opts,function(req,res) {
 
-});
+   });
 
-p.listen();
-*/
+   p.listen();
+ */
 
