@@ -1,3 +1,5 @@
+/// Use like this: http://ec2-54-218-98-194.us-west-2.compute.amazonaws.com:8089/pages/navalny.livejournal.com
+
 var express = require('express');
 var http = require('http');
 var url = require('url');
