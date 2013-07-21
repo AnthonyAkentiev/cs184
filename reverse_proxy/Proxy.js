@@ -6,9 +6,9 @@ var url = require('url');
 /*
    SSL options:
 
-   var options = {
-key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
-cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+var options = {
+     key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+     cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
 };
  */
 var createServer = function(opts,callback) {
@@ -42,10 +42,12 @@ function Proxy(opts,callback) {
      self.server = createServer(opts,function(req,res) {
           req.setEncoding('binary');
 
-          var context = { request: req, response: response };
+          var context = { request: req, response: res };
+
+          console.log( "Request is: " + req.url );
 
           // configure the client (proxy) request
-          context.client_request_params = {
+          Context.client_request_params = {
                host: req.headers.host.split(':')[0], 
                port: opts.port,
                method: req.method, 
@@ -54,6 +56,21 @@ function Proxy(opts,callback) {
                agent: new http.Agent({ maxSockets: 128 })
           };
 
+          /*
+          context.client_request_params = {
+               host: "www.google.com", 
+               port: opts.port,
+               method: req.method, 
+               path: "/index.html", 
+               headers: req.headers,
+               agent: new http.Agent({ maxSockets: 128 })
+          };*/
+
+          console.log( "Host=%s; Path=%s; Method=%s", 
+               context.client_request_params.host,
+               context.client_request_params.path,
+               context.client_request_params.method );
+
           callback(req,res);
 
           // emit client (proxy) request params
@@ -61,6 +78,8 @@ function Proxy(opts,callback) {
           self.emit('client-request-params', context, function(context) {
                // make the request and attach it to the context
                context.client_request = doRequest(opts, context.client_request_params, function(client_response) {
+                    console.log( "-->RESPONSE..." );
+
                     // set binary encoding by default
                     client_response.setEncoding('binary');
 
@@ -69,6 +88,8 @@ function Proxy(opts,callback) {
 
                     // listen client (proxy) response data event
                     client_response.on('data', function(chunk) {
+                         console.log( "-->DATA" );
+
                          // emit client (proxy) response data event
                          self.emit('client-response-data', context, chunk, function(context, chunk){
                               // default callback
@@ -78,6 +99,8 @@ function Proxy(opts,callback) {
 
                     // listen client (proxy) response end event
                     client_response.on('end', function(){
+                         console.log( "-->END" );
+
                          // emit client (proxy) response end event
                          self.emit('client-response-end', context, function(context, end){
                               // default callback
@@ -86,11 +109,15 @@ function Proxy(opts,callback) {
                     });
                });
 
+               console.log( "Request done1" );
+
                // ignore client (proxy) request timeouts
                context.client_request.on('error', function(){});
 
                // listen server request data event
                req.on('data', function(chunk){
+                    console.log( "-->Received DATA" );
+                    
                     // emit server request data event
                     self.emit('request-data', context, chunk, function(context, chunk){
                          // default callback
@@ -100,6 +127,8 @@ function Proxy(opts,callback) {
 
                // listen server request end event
                req.on('end', function(){
+                    console.log( "-->Received END" );
+
                     // emit server request end event
                     self.emit('request-end', context, function(context, end){
                          // default callback
@@ -171,14 +200,3 @@ Proxy.prototype = Object.create(events.EventEmitter.prototype);
 
 // is globally exported
 module.exports = Proxy;
-
-/*
-   var opts = {port:80, ssl:false, ssl_client:false};
-
-   var p = Proxy(opts,function(req,res) {
-
-   });
-
-   p.listen();
- */
-
