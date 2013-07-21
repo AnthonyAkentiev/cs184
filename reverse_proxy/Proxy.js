@@ -56,16 +56,6 @@ function Proxy(opts,callback) {
                agent: new http.Agent({ maxSockets: 128 })
           };
 
-          /*
-          context.client_request_params = {
-               host: "www.google.com", 
-               port: opts.port,
-               method: req.method, 
-               path: "/index.html", 
-               headers: req.headers,
-               agent: new http.Agent({ maxSockets: 128 })
-          };*/
-
           console.log( "Host=%s; Path=%s; Method=%s", 
                context.client_request_params.host,
                context.client_request_params.path,
@@ -170,13 +160,13 @@ function Proxy(opts,callback) {
      };
 
      // replaces any attached listener for the provided one
-     self.at = function(event, callback) {
+     self.addSingleListener = function(event, callback) {
           self.removeAllListeners(event);
           self.on(event, callback);
      };
 
      // pipes the corrent listeners at the end of the provided one
-     self.pre = function(event, callback){
+     self.addListener = function(event, callback){
           var attached = self.listeners(event),
               listeners = [];
 

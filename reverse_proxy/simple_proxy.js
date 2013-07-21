@@ -6,6 +6,16 @@ var url = require('url');
 
 var app = express();
 
+// determines if response is a 'found' redirect
+function is_redirect(response){
+    return response.statusCode === 302;
+}
+
+// determines if response is a 'temporary' redirect
+function is_temporary(response){
+    return response.statusCode === 307;
+}
+
 app.get('/pages/:page',function(req,response){
      var page = "http://" + req.params.page;
      var parts = url.parse(page,false,true);
@@ -30,6 +40,9 @@ app.get('/pages/:page',function(req,response){
           });
 
           resp.on('end',function(){
+               if(is_redirect(resp) || is_temporary(resp)){
+                    console.log("-->REDIRECT to %s", resp.headers.location );
+               }
                response.end();
           });
      });
