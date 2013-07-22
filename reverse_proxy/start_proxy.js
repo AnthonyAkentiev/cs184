@@ -1,6 +1,7 @@
 var Proxy = require('./Proxy');
 var jsdom = require('jsdom');
 var jquery = require('jquery');
+var url = require('url');
 
 // helpers:
 function is_html(request){
@@ -134,17 +135,19 @@ var app = new Proxy(opts,function(req,res) {
 
 });
 
+/*
 // before the client request is made, we want
 // to customize some headers
 app.addListener('client-request-params', function(context, callback){
+     console.log("client-request-params handler");
+
      var request = context.client_request_params,
 
      // if we've got query like ?host=yandex.ru&path=index.html
      query = parseQuery(request);
 
-     console.log("Query: host=%s; path=%s",query.host, query.path);
-
      if (query){
+          console.log("Query: host=%s; path=%s",query.host, query.path);
           // remove gzip
           no_gzip(request);
           // attach 'connection close' header
@@ -157,9 +160,10 @@ app.addListener('client-request-params', function(context, callback){
      callback(context);
 });
 
-/*
 // when we got some data chunks from the proxy client
 app.addSingleListener('client-response-data', function(context, chunk, callback){
+     console.log("client-response-data handler");
+
      var request = context.request,
      response = context.response;
 
@@ -183,6 +187,8 @@ app.addSingleListener('client-response-data', function(context, chunk, callback)
 
 // when the proxy client response is finished
 app.addSingleListener('client-response-end', function(context){
+     console.log("client-response-end handler");
+
      var request = context.request,
      response = context.response,
      client_response = context.client_response;
@@ -192,8 +198,9 @@ app.addSingleListener('client-response-end', function(context){
           var buffer = context.buffer.join('').toString('utf8'),
           current_url = 'http://' + request.headers.host;
 
-          // parse the buffer as DOM and write the result to the response
-          response.write(rewrite_dom(buffer, current_url).toString('binary'), 'binary');
+          // TODO: parse the buffer as DOM and write the result to the response
+          //response.write(rewrite_dom(buffer, current_url).toString('binary'), 'binary');
+          response.write(buffer);
      }
      else if (is_temporary(client_response) || is_redirect(client_response)){
           // if we are dealing with a HTTP 302 redirect

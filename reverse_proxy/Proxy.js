@@ -47,7 +47,7 @@ function Proxy(opts,callback) {
           console.log( "Request is: " + req.url );
 
           // configure the client (proxy) request
-          Context.client_request_params = {
+          context.client_request_params = {
                host: req.headers.host.split(':')[0], 
                port: opts.port,
                method: req.method, 
