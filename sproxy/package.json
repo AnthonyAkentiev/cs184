@@ -1,0 +1,15 @@
+{                                                                                                                       
+	"name": "sproxy",
+	"version": "0.0.1",
+	"description": "Stream-filter proxy server",
+	"author": "Pablo Vidal <pablo@pixeltex.com> (http://github.com/pabloPXL)",
+	"engine": "node 0.8.0",
+	"main": "lib/proxy.js",
+    "bin": {
+        "sproxy": "bin/sproxy"
+    },
+	"dependencies": {
+        "commander": ">=1.0.5"
+	}
+}
+

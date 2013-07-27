@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+var program = require('commander'),
+   start = require('../lib/commands/start'),
+   restart = require('../lib/commands/restart'),
+   stop = require('../lib/commands/stop');
+
+// CLI Definition
+program
+   .version('0.0.1')
+   .usage('[options] [command]')
+   .option('-p, --port <port>', 'listening port for the proxy', Number, 8080)
+   .option('-f, --filters <filters>', 'filters to load', String, '')                                   
+   .option('-k, --fork', 'run in background', false)
+   .option('-o, --oplog', 'record operation logs', false)
+   .option('-l, --log <path>', 'main operation log file path', 'log/sproxy.log')
+   .option('-e, --errlog <path>', 'error operation log file path', 'log/err-sproxy.log')
+   .option('-p, --pid <path>', 'PID file path', 'lock.pid');
+
+program
+   .command('start')
+   .description('starts the daemon')
+   .action(function(env){
+      start(program, env);
+   });
+
+program
+   .command('restart')
+   .description('restarts the daemon')
+   .action(function(env){
+      restart(program, env);
+   });
+
+program
+   .command('stop')
+   .description('stops the daemon')
+   .action(function(env){
+      stop(program, env);
+   });
+
+program
+   .command('*')
+   .action(function(env){
+      console.log('Error: command not found');
+      program.help();
+   });
+
+
+// Parse and run
+program.parse(process.argv);
