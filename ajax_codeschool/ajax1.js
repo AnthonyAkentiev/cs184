@@ -1,6 +1,6 @@
 $(document).ready(function() {
-$("#tour").on("click", "button", function() {
-     $.ajax("/photos.html",{ success:function(response){
+     $("#tour").on("click", "button", function() {
+          $.ajax("/photos.html",{ success:function(response){
 
           }});
      });
@@ -8,20 +8,20 @@ $("#tour").on("click", "button", function() {
 
 /// step 2
 $(document).ready(function() { 
-$("#tour").on("click", "button", function() { 
-$.ajax('/photos.html',{ success:function(response){
-     $(".photos").html(response);
-             $(".photos").fadeIn();
-       }});
-    });
+     $("#tour").on("click", "button", function() { 
+          $.ajax('/photos.html',{ success:function(response){
+               $(".photos").html(response);
+               $(".photos").fadeIn();
+          }});
+     });
 });
 
 
 /// step 3
 $(document).ready(function() {
-$("#tour").on("click", "button", function() {
-$.get('/photos.html', function(response) {
-         $('.photos').html(response).fadeIn();
+     $("#tour").on("click", "button", function() {
+          $.get('/photos.html', function(response) {
+              $('.photos').html(response).fadeIn();
           });
      });
 });
@@ -29,85 +29,86 @@ $.get('/photos.html', function(response) {
 
 /// step 4 (data
 $(document).ready(function() {
-          var el = $("#tour")
-          el.on("click", "button", function() {
-               $.ajax('/photos.html', {
-data: {location: el.data('location')},
-success: function(response) {
-$('.photos').html(response).fadeIn();
-}
-});
-});
+     var el = $("#tour")
+
+     el.on("click", "button", function() {
+          $.ajax('/photos.html', {
+               data: {location: el.data('location')},
+               success: function(response) {
+                    $('.photos').html(response).fadeIn();
+               }
+          });
+     });
 });
 
 /// Error handling
 $(document).ready(function() {
-          var el = $("#tour");
-          el.on("click", "button", function() {
-               $.ajax('/photos.html', {
-data: {location: el.data('location')},
-success: function(response) {
-$('.photos').html(response).fadeIn();
-},
-error:function(request,error,errorMessage){
-$('.photos').html("<li>shit!</li>");
-},
-timeout:3000
-});
-               });
+     var el = $("#tour");
+     el.on("click", "button", function() {
+          $.ajax('/photos.html', {
+               data: {location: el.data('location')},
+               success: function(response) {
+                    $('.photos').html(response).fadeIn();
+               },
+               error:function(request,error,errorMessage){
+                    $('.photos').html("<li>shit!</li>");
+               },
+               timeout:3000
           });
+     });
+});
 
 
 /// step 6: Compelete
 $(document).ready(function() {
-          $("#tour").on("click", "button", function() {
-               $.ajax('/photos.html', {
-success: function(response) {
-$('.photos').html(response).fadeIn();
-},
-error: function() {
-$('.photos').html('<li>There was a problem fetching the latest photos. Please try again.</li>');
-},
-timeout: 3000,
-beforeSend:function(){
-$('.confirmation').addClass('is-fetching');
-},
-complete:function(){
-$('.confirmation').removeClass('is-fetching');
-}
-});
-               });
+     $("#tour").on("click", "button", function() {
+          $.ajax('/photos.html', {
+               success: function(response) {
+                    $('.photos').html(response).fadeIn();
+               },
+               error: function() {
+                    $('.photos').html('<li>There was a problem fetching the latest photos. Please try again.</li>');
+               },
+               timeout: 3000,
+               beforeSend:function(){
+                    $('.confirmation').addClass('is-fetching');
+               },
+               complete:function(){
+                    $('.confirmation').removeClass('is-fetching');
+               }
           });
+     });
+});
 
 
 /// step7:
 $(document).ready(function() {
-          function showPhotos() {
+     function showPhotos() {
           $(this).find('span').slideToggle();
-          }
-          $('.photos').on('mouseenter', 'li', showPhotos)
+     }
+     
+     $('.photos').on('mouseenter', 'li', showPhotos)
           .on('mouseleave', 'li', showPhotos);
 
-
-          var el = $("#tour");
-          el.on("click", "button", function() {
-               $.ajax('/photos.html', {
-data: {location: el.data('location')},
-success: function(response) {
-$('.photos').html(response).fadeIn();
-},
-error: function() {
-$('.photos').html('<li>There was a problem fetching the latest photos. Please try again.</li>');
-},
-timeout: 3000,
-beforeSend: function() {
-$('#tour').addClass('is-fetching');
-},
-complete: function() {
-$('#tour').removeClass('is-fetching');
-}
-});
-               });
+     var el = $("#tour");
+     el.on("click", "button", function() {
+          $.ajax('/photos.html', {
+               data: {location: el.data('location')},
+               success: function(response) {
+                    $('.photos').html(response).fadeIn();
+               },
+               error: function() {
+                    $('.photos').html('<li>There was a problem fetching the latest photos. Please try again.</li>');
+               },
+               timeout: 3000,
+               beforeSend: function() {
+                    $('#tour').addClass('is-fetching');
+               },
+               complete: function() {
+                    $('#tour').removeClass('is-fetching');
+               }
+          });
+     });
 });
 
 /// Step8:
@@ -272,4 +273,53 @@ $(document).ready(function() {
      });
 });
 
+/// Level4 ! Utilities
 /// Step15 
+$('button').on('click', function() {
+     $.ajax('/cities/deals', {
+           success: function(result) {
+                $.each(result, function(index, dealItem) {
+                    // Your code goes here
+                    var el = $(".deal-" + index);
+                    el.find("h3").html(dealItem.name);
+                    el.find("p").html(dealItem.price);
+               });
+          }
+    });
+});
+
+// Step 16 - simplify
+$('button').on('click', function() {
+     $.getJSON('/cities/deals', function(result) {
+          $.each(result, function(index, dealItem) {
+               var dealElement = $('.deal-' + index);
+               dealElement.find('.name').html(dealItem.name);
+               dealElement.find('.price').html(dealItem.price);
+          });
+     });
+});
+
+// Step 17 - map
+$('.update-available-flights').on('click', function() {
+     $.getJSON('/flights/late', function(result) {
+           var flightElements = $.map(result, function(flightItem, index){
+                 var flightEl = $('<li>'+flightItem.flightNumber+'-'+flightItem.time+'</li>');
+                       return flightEl;
+            });
+           $('.flight-times').html(flightElements)
+   });
+});
+
+// Step 18 - detach
+$('.update-available-flights').on('click', function() {
+     $.getJSON('/flights/late', function(result) {
+
+          var flightElements = $.map(result, function(flightItem, index){
+               var flightEl = $('<li>'+flightItem.flightNumber+'-'+flightItem.time+'</li>');
+               return flightEl;
+          });
+
+          $('.flight-times').detach().html(flightElements).appendTo(".flights");
+     });
+});
+
