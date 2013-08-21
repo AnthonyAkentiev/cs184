@@ -323,3 +323,224 @@ $('.update-available-flights').on('click', function() {
      });
 });
 
+// Step 19 - events
+$(document).ready(function(){
+// Get Weather
+     $('button').on('click.weather', function() {
+          var results = $(this).closest('li').find('.results');
+          results.append('<p>Weather: 74&deg;</p>');
+          $(this).off('click.weather');
+     });
+               
+     // Show Photos
+     $('button').on('click.photos', function() {
+          var tour = $(this).closest('li');
+          var results = tour.find('.results');
+          results.append('<p><img src="/assets/photos/'+tour.data('loc')+'.jpg" /></p>');
+          $(this).off('click.photos');
+     });
+});
+
+// Step 20 - trigger custom events
+
+// Step 21 - plugins
+$.fn.photofy = function(){
+     console.log(this);
+}
+
+$(document).ready(function() { 
+     $('.tour').photofy();
+});
+
+// Step 22 - each
+$.fn.photofy = function() {
+     this.each(function(){
+          console.log(this);
+     });
+}
+
+$(document).ready(function() {
+     $('.tour').photofy();
+});
+
+// Step 23 - 
+
+
+// Step 23 - 
+
+// Step 23 - 
+$.fn.photofy = function() {
+     this.each(function() { 
+          var el = $(this);    
+          var show = function(e) {
+               e.preventDefault();
+               el.addClass('is-showing-photofy');
+          }
+                           
+          el.on('click.photofy', '.see-photos', show);
+     });
+}
+
+$(document).ready(function() {
+     $('.tour').photofy();  
+});
+
+// Step 24 - extend
+$.fn.photofy = function(options) {
+     this.each(function() {    
+          var show = function(e) {
+               e.preventDefault();
+               settings.tour
+               .addClass('is-showing-photofy')
+               .find('.photos')
+               .find('li:gt('+(settings.count-1)+')').hide();
+          }
+
+          var settings = $.extend(
+               {count:3, 
+               tour:$(this)
+               },
+               options
+          );
+
+          settings.tour.on('click.photofy', '.see-photos', show);
+     });
+}
+
+$(document).ready(function() {
+     $('.tour').photofy({ count: 1});
+});
+
+// Step 25 - trigger
+$.fn.photofy = function(options) {
+     this.each(function() {
+          var show = function(e) {
+               e.preventDefault();
+               settings.tour
+               .addClass('is-showing-photofy')
+               .find('.photos')
+               .find('li:gt('+(settings.count-1)+')')
+                    .hide();
+          }
+          var settings = $.extend({
+               count: 3,
+               tour: $(this)
+          }, options);
+
+          settings.tour.on('click.photofy', '.see-photos', show);
+          settings.tour.on('show.photofy', show);
+     });
+}
+
+$(document).ready(function() {
+     $('.tour').photofy({ count: 1});
+
+     $('.show-photos').on('click', function(e) {
+          e.preventDefault();
+          $('.tour').trigger("show.photofy");
+     });
+});
+
+// Step 26 - fade
+$.fn.photofy = function(options) {
+     this.each(function() {
+          var show = function(e) {
+               e.preventDefault();
+               settings.tour
+               .addClass('is-showing-photofy')
+               .find('.photos')
+               .find('li:gt('+(settings.count-1)+')')
+                    .hide();
+          }
+
+          var settings = $.extend({
+               count: 3,
+               tour: $(this)
+          }, options);
+
+          var remove = function(e) {
+               e.preventDefault();
+               settings.tour.fadeOut().off('.photofy'); 
+          };
+
+          settings.tour.on('click.photofy', '.see-photos', show);
+          settings.tour.on('show.photofy', show);    
+          settings.tour.on('click.photofy','.hide-tour',remove);
+     });
+}
+
+$(document).ready(function() {
+     $('.tour').photofy({ count: 1});
+
+     $('.show-photos').on('click', function(e) {
+          e.preventDefault();
+          $('.tour').trigger('show.photofy');
+     });
+});
+
+
+// Step 27 - promises
+var Vacation = {
+     getPrice: function(location){
+          var promise = $.ajax('/vacation/prices', {
+               data: {q: location}
+          });
+
+          return promise;
+     }
+}
+
+// Step 28 - done
+$(document).ready(function() {
+     $('button').on('click', function(){
+          var location = $('.location').text();
+
+          var vac = Vacation.getPrice(location);
+          vac.done(function(result){
+               $('.price').text(result.price);
+          });
+     });
+});
+
+// Step 29 - error handler + resolve/reject
+var Vacation = {
+     getPrice: function(location){
+          var promise = $.Deferred();
+          $.ajax({
+               url: '/vacation/prices',
+               data: {q: location},
+               success: function(result){
+                    promise.resolve(result.price);
+               },
+               error: function(result){
+                    promise.reject("Bad");
+               }
+          });
+          return promise;
+     }
+}
+
+$(document).ready(function() {
+     $('button').on(click, function(){
+          var location = $('.location').text();
+          Vacation.getPrice(location).done(function(result){
+               $('.price').text(result.price);
+          });
+     });
+});
+
+// Step 30 
+$(document).ready(function() {
+     $('button').on('click', function(){
+          var location = $(this).parent().data('location');
+          var resultDiv = $(this).parent().find('.results').empty();
+
+          $.when(
+               Vacation.getPrice(location),
+               Photo.getPhoto(location)
+               ).then(function(priceResult, photoResult) {
+                    $('<p>$'+priceResult+'</p>').appendTo(resultDiv);
+                    $('<img />').attr('src', photoResult).appendTo(resultDiv);
+               });
+     });
+});
