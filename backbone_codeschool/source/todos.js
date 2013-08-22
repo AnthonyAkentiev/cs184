@@ -157,7 +157,7 @@ $(function(){
     el: $("#todoapp"),
 
     // Our template for the line of statistics at the bottom of the app.
-    statsTemplate: _.template($('#stats-template').html()),
+    //statsTemplate: _.template($('#stats-template').html()),
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
@@ -193,7 +193,7 @@ $(function(){
       if (Todos.length) {
         this.main.show();
         this.footer.show();
-        this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
+        //this.footer.html(this.statsTemplate({done: done, remaining: remaining}));
       } else {
         this.main.hide();
         this.footer.hide();
