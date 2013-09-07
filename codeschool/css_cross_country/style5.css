@@ -1,0 +1,32 @@
+nav li {
+     float: left;
+}
+
+aside {
+     float: right;
+     width: 120px;
+}
+
+article {
+     float: left;
+     width: 120px;
+}
+
+.clear {
+     clear: both;
+}
+
+/* clearfix */
+.group:before,
+.group:after {
+     content: "";
+     display: table;
+}
+
+.group:after {
+     clear: both;
+}
+
+.group {
+     zoom: 1;
+}
