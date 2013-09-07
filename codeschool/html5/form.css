@@ -1,0 +1,25 @@
+#sign-up input[type="submit"] {
+     float: right;
+     margin-bottom: 10px;
+     margin-right: 10px;
+     padding: 8px 15px;
+     font: bold 12px "DroidSansBold", Verdana, sans-serif;
+     text-transform: uppercase;
+     line-height: 1;
+     color: #fff;
+     border: none;
+     background-color: #e2e2d9;
+     cursor: pointer;
+     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ff9c69), to(#dc692e)); 
+     background-image: -moz-linear-gradient(top, #FF9C69, #DC692E);
+     text-shadow: 1px 1px 2px rgba(100, 48, 22, 1);
+     -webkit-border-radius: 7px; 
+     -moz-border-radius: 7px; 
+     border-radius: 7px;
+}
+
+#sign-up input[type="submit"]:hover {
+     -webkit-box-shadow: -2px 2px 4px rgba(25, 12, 5, .5); 
+     -moz-box-shadow: -2px 2px 4px rgba(25, 12, 5, .5);
+     box-shadow: -2px 2px 4px rgba(25, 12, 5, .5);
+}

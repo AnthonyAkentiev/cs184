@@ -1,0 +1,52 @@
+.button {
+display: inline-block;
+         -webkit-border-radius: 10px;
+         -moz-border-radius: 10px;
+         border-radius: 10px;
+         -webkit-box-shadow: 0 8px 0 #823a17,  0 15px 20px rgba(0, 0, 0, .5);
+         -moz-box-shadow: 0 8px 0 #823a17,  0 15px 20px rgba(0, 0, 0, .5);
+         box-shadow: 0 8px 0 #823a17,  0 15px 20px rgba(0, 0, 0, .5);
+         -webkit-transition: all .2s ease-in-out;
+         -moz-transition: all .2s ease-in-out;
+transition: all .2s ease-in-out;
+}
+
+.button span {
+display: inline-block;
+padding: 10px 20px;
+         font-family: 'LeagueGothicRegular', sans-serif;
+         font-size: 18px;
+         text-transform: uppercase;
+         line-height: 1;
+         text-shadow: 0 -1px 1px rgba(19, 65, 88, .8);
+background: #bb5422;
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FA8246), to(#bb5422));
+background: -moz-linear-gradient(top, #FA8246, #BB5422);
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 -1px 1px rgba(255, 255, 255, .10);
+            -moz-box-shadow: inset 0 -1px 1px rgba(255, 255, 255, .10);
+            box-shadow: inset 0 -1px 1px rgba(255, 255, 255, .10);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+transition: all .2s ease-in-out;
+}
+
+.button:active {
+     -webkit-transition: -webkit-transform 0s ease-in-out;
+     -moz-transition: -moz-transform 0s ease-in-out;
+transition: transform 0s ease-in-out;
+            -webkit-box-shadow: 0 8px 0 #823a17,  0 12px 10px rgba(0, 0, 0, .3);
+            -moz-box-shadow: 0 8px 0 #823a17,  0 12px 10px rgba(0, 0, 0, .3);
+            box-shadow: 0 8px 0 #823a17,  0 12px 10px rgba(0, 0, 0, .3);
+}
+
+.button:active span {
+     -webkit-transition: -webkit-transform 0s ease-in-out;
+     -moz-transition: -moz-transform 0s ease-in-out;
+transition: transform 0s ease-in-out;
+            -webkit-transform: translate(0, 4px);
+            -moz-transform: translate(0, 4px);
+transform: translate(0, 4px);
+}
