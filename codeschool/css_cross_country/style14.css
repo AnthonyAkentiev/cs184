@@ -1,0 +1,24 @@
+.store {
+     display: block;
+     position: relative;
+}
+
+.store:before, .store:after {
+     display: block;
+     position: absolute;
+     content: '';
+}
+
+.store:before {
+     background: url(store-before.png);
+     height: 23px;
+     width: 54px;
+     top: -3px;
+     left: -3px;
+}
+
+.store:after {
+     background: url(store-after.png);
+     height: 20px;
+     width: 41px;
+}

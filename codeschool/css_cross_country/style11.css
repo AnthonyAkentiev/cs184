@@ -1,0 +1,5 @@
+/*Pseudo-classes: */
+p:first-child {
+     color: #999;
+     font-style: italic;
+}
