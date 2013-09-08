@@ -1,0 +1,32 @@
+@media screen and (max-width: 320px) {
+.logo {
+     float: none;
+     width: inherit;
+}
+
+nav {
+     float: none;
+     text-align: center;
+     width: inherit;
+}
+
+}
+
+/**/
+@media screen and (max-width: 320px) {
+     nav ul li {
+          font-size: .8125em; /* 13px/16px */
+          margin-right: 5%;
+          text-transform: uppercase;
+     }
+}
+
+/**/
+@media screen and (max-width: 850px) {
+     nav {
+          margin-top:20px;
+     }
+     nav ul li {
+          font-size:0.875em;
+     }
+}
