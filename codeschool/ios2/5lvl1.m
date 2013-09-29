@@ -69,4 +69,20 @@
      [anEncoder encodeObject:self.memberSince forKey:@"memberSince"];
      [anEncoder encodeObject:self.location forKey:@"location"];
 }
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+     self = [super init];
+     if(self) {
+          self.firstName = [aDecoder decodeObjectForKey:@"firstName"];
+          self.lastName  = [aDecoder decodeObjectForKey:@"lastName"];
+          self.city      = [aDecoder decodeObjectForKey:@"city"];
+          self.profilePhoto = [aDecoder decodeObjectForKey:@"profilePhoto"];
+          self.memberSince  = [aDecoder decodeObjectForKey:@"memberSince"];
+          self.biography = [aDecoder decodeObjectForKey:@"biography"];
+          self.location  = [aDecoder decodeObjectForKey:@"location"];
+     }
+     return self;
+}
+
+
 @end
