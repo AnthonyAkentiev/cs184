@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <title>8 - Avengers</title>
+    <link rel="stylesheet" href="../css/foundation.min.css">
+  </head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+  
+  <script src="../js/foundation_jquery.js"></script>
+  <script src="../js/topnav.js"></script>
+  <script src="../js/foundation.min.js"></script>
+  <script src="../js/vendor/custom.modernizr.js"></script>
+  <script src="../js/setup.js"></script>
+
+  <script src="main.js"></script>
+
+  <body>
+    <div ng-app="myApp">
+
+         <div ng-controller="AvengersCtrl">
+         <input type="text" ng-model="searchText">
+
+          <table>
+               <tr>
+                    <td><b>Name</b></td>
+                    <td><b>Character</b></td>
+               </tr>
+
+               <tr ng-repeat="actor in avengers.cast | limitTo:5 | orderBy:'name' | filter:searchText">
+                    <td>{{actor.name | lowercase}}</td>
+                    <td>{{actor.character | uppercase}}</td>
+               </tr>
+          </table>
+         </div>
+
+    </div>
+
+  </body>
+</html>
