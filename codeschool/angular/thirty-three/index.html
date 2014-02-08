@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <title>25 - angular.element</title>
+    <link rel="stylesheet" href="../css/foundation.min.css">
+  </head>
+
+  <body ng-app="publicapi">
+	<ul ng-controller="controllers.View">
+		<!--
+		<li ng-repeat="repo in repos">
+			<b ng-bind="repo.userName"></b>
+			<span>-</span>
+			<span ng-bind="repo.gitUrl"></span>
+		</li>
+		-->
+	</ul>
+
+	<input type="text" ng-model="app.person.firstName"/>
+	<input type="text" ng-model="app.person.secondName"/>
+	<input type="button" ng-click="app.addPerson(app.person)"/>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js" type="text/javascript"></script>
+    <script src="../js/angular-animate.js"></script>
+
+    <script type="text/javascript" src="../js/foundation_jquery.js"></script>
+    <script src="../js/topnav.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script src="../js/vendor/custom.modernizr.js"></script>
+    <script src="../js/setup.js"></script>
+
+    <script src="publicapi.js"></script>
+    <script src="api.js"></script>
+    <script src="api-response.js"></script>
+    <script src="view.js"></script>
+
+	<!--
+	-->
+  </body>
+<html>
