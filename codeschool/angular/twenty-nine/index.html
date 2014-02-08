@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <title>25 - angular.element</title>
+    <link rel="stylesheet" href="../css/foundation.min.css">
+  </head>
+  <body ng-app="app" ng-controller="AppCtrl as app">
+
+     <form>
+          <input type="text" ng-model="app.contactCopy.firstName"/>
+          <button ng-click="app.saveContact()">Save...</button>
+     </form>
+
+     <div class="div" style="margin-top: 40px;">
+     </div>
+
+     <table class="table table-stripped">
+          <thead>
+               <tr>
+                    <td>First</td>
+                    <td>Second</td>
+                    <td>Third</td>
+               </tr>
+          </thead>
+
+          <tbody>
+               <tr ng-repeat="contact in app.contacts" ng-click="app.selectContact(contact)">
+                    <td>{{contact.first}}</td>
+                    <td>{{contact.second}}</td>
+                    <td>{{contact.third}}</td>
+               </tr>
+          </tbody>
+     </table>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js" type="text/javascript"></script>
+    <script src="../js/angular-animate.js"></script>
+
+    <script type="text/javascript" src="../js/foundation_jquery.js"></script>
+    <script src="../js/topnav.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script src="../js/vendor/custom.modernizr.js"></script>
+    <script src="../js/setup.js"></script>
+    <script src="main.js"></script>
+  </body>
+<html>
