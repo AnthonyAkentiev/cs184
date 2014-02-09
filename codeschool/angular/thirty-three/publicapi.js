@@ -1,6 +1,6 @@
 angular.module('publicapi.controllers',[]);
 angular.module('publicapi.services',[]);
-angular.module('publicapi.transformers',[]);
+angular.module('publicapi.transformers',['angular-underscore']);
 
 angular.module('publicapi',
 	[
