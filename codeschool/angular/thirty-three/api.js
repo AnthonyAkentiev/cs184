@@ -13,7 +13,7 @@ angular.module('publicapi.services').factory('services.Api',[
 					transformResponse: apiTransformer
 				}).
 				success(function(data){
-					deferred.resolve();
+					deferred.resolve(data);
 				});
 
 				return deferred.promise;
