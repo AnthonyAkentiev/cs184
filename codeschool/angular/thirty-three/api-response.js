@@ -9,8 +9,6 @@ angular.module('publicapi.transformers').factory('services.transformer.ApiRespon
                });
           }
 
-          console.log('-->Data: ');
-          console.log(data);
           return data;
-	}
+	};
 });
